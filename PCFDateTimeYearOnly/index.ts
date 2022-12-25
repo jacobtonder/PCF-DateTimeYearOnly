@@ -112,16 +112,16 @@ export class PCFDateTimeYearOnly implements ComponentFramework.StandardControl<I
         ReactDom.render(dropDownSelector, this._container);
     }
 
-    private correctTimeZone(date: Date): Date 
+    private correctTimeZone(date: Date): Date
     {  
         const TIMEZONE_INDEPENDENT_BEHAVIOR = 3;
         const fieldBehavior = this._context.parameters.value.attributes!.Behavior;
         const timezoneOffsetInMinutes = fieldBehavior === TIMEZONE_INDEPENDENT_BEHAVIOR
           ? 0
           : this._context.userSettings.getTimeZoneOffsetMinutes(date);
-  
+
         const newDate = new Date(date).setMinutes(date.getMinutes() + date.getTimezoneOffset() + timezoneOffsetInMinutes);
-  
+
         return new Date(newDate);
       }
 }
