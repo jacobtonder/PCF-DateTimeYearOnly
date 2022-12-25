@@ -79,7 +79,8 @@ export class PCFDateTimeYearOnly implements ComponentFramework.StandardControl<I
         }
 
         let year = this._currentValue ?? null;
-        return { value: new Date(Date.UTC(year, 0, 2, 0, 0, 0, 0)) };
+        let date = this.correctTimeZone( new Date(year, 0, 2));
+        return { value: date };
     }
 
     /**
@@ -110,4 +111,17 @@ export class PCFDateTimeYearOnly implements ComponentFramework.StandardControl<I
 
         ReactDom.render(dropDownSelector, this._container);
     }
+
+    private correctTimeZone(date: Date): Date 
+    {  
+        const TIMEZONE_INDEPENDENT_BEHAVIOR = 3;
+        const fieldBehavior = this._context.parameters.value.attributes!.Behavior;
+        const timezoneOffsetInMinutes = fieldBehavior === TIMEZONE_INDEPENDENT_BEHAVIOR
+          ? 0
+          : this._context.userSettings.getTimeZoneOffsetMinutes(date);
+  
+        const newDate = new Date(date).setMinutes(date.getMinutes() + date.getTimezoneOffset() + timezoneOffsetInMinutes);
+  
+        return new Date(newDate);
+      }
 }
