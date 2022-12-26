@@ -10,7 +10,8 @@ export interface DropDownSelectorProps
     onChange: (selectedOption?: IDropdownOption) => void;
 }
 
-export const DropDownSelector: React.FunctionComponent<DropDownSelectorProps> = props => {
+export const DropDownSelector: React.FunctionComponent<DropDownSelectorProps> = props =>
+{
     return (
         <Dropdown
             selectedKey = { props.selectedValue }
